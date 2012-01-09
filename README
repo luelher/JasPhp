@@ -1,0 +1,33 @@
+JasPhp
+
+Micro Framework de Desarrollo Rápido de Reportes usando Jasper Report y Php
+
+Aplicación que  permite generar reportes de forma fácil y rápida
+utilizando técnicas RAD como el scallfold, convensiones de configuración
+y parametrización mediante archivos yml.
+
+Se usa el lenguaje PHP para la presentación del "Formulario de Parámetros"
+para que el usuario "Filtre" los datos que quiere sean mostrados en reportes. 
+Este formulario es "Parametrizado" mediante un archivo .yml donde se describe
+lo que se quiere sea filtrado por el usuario antes de generar el reportes. 
+El reporte por otro lado es diseñado y generado por las librerías Jasper Report.
+
+Esta integración de PHP y Jasper Report no usa ninguna interfáz o "Bridget"
+entre los lenguajes, lo cual hace mucho mas fácil y portable el despliegue
+de los reportes.
+
+Este projecto es el resultado de varios años de evolución de varios conceptos
+y necesidades de la empresa donde trabajo. Para este projecto debo dar crédito
+al personal que labora en la empresa CIDESA, ya que allí surge esta necesidad.
+
+Para comentarios, observaciones y aportes.
+
+luelher@gmail.com
+@luelher
+http://cyberrevolucionario.blogspot.com/
+
+Cabudare, Lara, Venezuela
+
+
+
+

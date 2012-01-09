@@ -1,0 +1,56 @@
+.topbar div .loggin {
+  display: block;
+  float: left;
+  padding: 10px 10px 11px;
+  line-height: 19px;
+  text-decoration: none;
+  color: #BFBFBF;
+}
+
+.topbar div .loggin-right {
+  display: block;
+  float: right;
+  padding: 10px 10px 11px;
+  line-height: 19px;
+  text-decoration: none;
+  color: #BFBFBF;
+}
+
+
+.topbar div .loggin span {
+  color: #FFFFFF;
+}
+
+
+.input-large, input.large, textarea.large, select.large {
+  height: 26px
+}
+
+.input-medium, input.medium, textarea.medium, select.medium {
+  height: 26px
+}
+
+
+
+.modal .zebra-striped .close {
+    color: #0069D6;
+    float: left;
+    font-size: 100%;
+    font-weight: normal;
+    line-height: 1px;
+    opacity: 1;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.modal .modal-footer .close {
+    float: right;
+    font-size: 100%;
+    font-weight: normal;
+    line-height: 18px;
+    opacity: 1;
+}
+
+.row .span11 .actions {
+  padding: 17px 20px 18px 220px;
+}
+

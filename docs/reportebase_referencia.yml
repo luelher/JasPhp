@@ -1,0 +1,115 @@
+#CONFIGURACION DE ARCHIVOS YML TEMPORALES
+#PARA LOS REPORTES
+#Los comentarios al final indican que debe llevar la siguiente linea despues del comentario
+
+Parametros:
+#PARAMETROS FIJOS
+  #Nombre del Modulo y del Reporte #
+  modulo: tesoreria
+  nomrep: tsrplaliqislr
+
+  #Titulo del Reporte (SIEMPRE APARECERA EN MAYUSCULA), Orientacion y Tipo de Pagina, Ancho de los tag <td>#
+  titulo: Impuesto sobre la renta LIQUIDACION
+  orientacion: Vertical
+  tipopagina: Carta
+  width: 210
+
+#PARAMETRO FORMULARIO
+Filas:
+  #Para los arreglos a continuacion ,pueden llevar cualquier nombre siempre q tenga los dos puntos (:) y no se repita
+  #Este arreglo a continuacion representa una fila del formulario es decir su label y sus dos
+  #cajas de texto en tal caso q desee dos (2)
+  #La variable "tipotag" representa lo que se quiere colocar en el formulario todos los ejemplos
+  #posibles estan aqui
+  CATALOGO PRIMERO:
+
+    #tipotag: INPUTCAT_TAG representa dos cajas de text con catalgos con su valor min y su valor max#
+    tipotag:   inputcat_tag
+    label: CATALOGO PRUEBA
+    sql:   SELECT min(codnom) as codnommin,max(codnom) as codnommax FROM npnomina
+
+    #Informacion para la caja de texto DESDE, nomdes=name de la caja de texto, campodes=valor del sql
+    #a colocar en el value y catdes=numero de catalogo
+    #DESDE
+    nomdes: pruebades
+    campodes: codnommin
+    catdes: 0
+
+    #De querer una sola caja de texto eliminar las tres siguientes lineas es decir las lineas q refieren al HASTA, de lo contrario seguir las mismas
+    #caracteristicas anteriores
+    #HASTA
+    nomhas: pruebahas
+    campohas: codnommax
+    cathas: 1
+
+    #Nombre del catalogo como aperece en la clase bussiness,
+    #recordar q todos los catalodos deben definirse con la palabra "catalalogo_" q las antecede,
+    #ejemplo si el catalogo se llama "function catalogo_npnomina_codnom($objhtml)"
+    #colocar nomcat: npnomina_codnom
+    #en nuestro caso la variable nomcat se colocara de esta manera
+    nomcat: codnom
+
+    #Parametros para la configuracion de las cajas de texto
+    size: 25
+
+    #parametros adicionales que se pueden agregar a las cajas de texto ejemplo un tamaño(tomara este y sobreescribira el anterior) o
+    #cualquier cosa permitida para los tag html, ejemplo el javascript a continuacion
+    parametros:  size="20" onclick="javascript:mostrarid(this.id)"
+
+  #El INPUTFEC_TAG es para determinar fechas, es similar al anterior solo q no lleva lo referente
+  #a catalogos, al igual que el anterior de querer una sola caja de fechas debe elimnar los referente al HASTA
+  fecha PRIMERA:
+    tipotag:   inputfec_tag
+    label: FECHA PRUEBA
+    sql:   SELECT min(fecemi) as fechamin,max(fecemi) as fechamax FROM tscheemi
+    #DESDE
+    nomdes: fechades
+    campodes: fechamin
+    #HASTA
+    nomhas: fechahas
+    campohas: fechamax
+    #PARAMETROS
+    size: 15
+
+  #PARA COMBO_TAG tambien es similar a los anteriores y es para determinar combos que se llenas a traves de un
+  #query ,aqui el sql debe tener dos campos el codigo que se pasara
+  #por el POST y el nombre que mostra la caja de texto, de quere uno Eliminar lo referente al HASTA
+  Combo primero:
+    tipotag:   combo_tag
+    label: COMBO PRUEBA
+    sql:   SELECT codnom, nomnom FROM npnomina order by codnom
+    #La variable campodes o campohas, debe seguir el estandar "codigo-nombre"
+    #DESDE
+    nomdes: combodes
+    campodes: codnom-nomnom
+    #HASTA
+    nomhas: combodes
+    campohas: codnom-nomnom
+    #PARAMETROS
+    #parametros: width=100
+
+  #PARA COMBOF_TAG similar tambien a los anteriores es para combos con valores fijos, debes pasarles los valores que estaran fijos
+  #entro los caracteres "[" y "]", de querer uno solo seguir lo anterior
+  combo primero fijo:
+    tipotag:   combof_tag
+    label: COMBO FIJO PRUEBA
+    nomdes: combodes
+    campodes: [v1=>var1, v2=>var2, v3=>var3, v4=>var4]
+    nomhas: combohas
+    campohas: [var4, var3, var2, var1]
+    #SI NO LE PASAS EL V1=> POR DEFECTO TOMA PARA EL VALUE EL VALOR QUE TENGA
+    #PARAMETROS
+    #parametros: width=100
+
+  #PARA INPUT_TAG tambien es similar a los demas, y es una caja de texto comun y corriente, se le coloca "-1" a las variables
+  #campodes o campohas por defecto para que no tengan valores y si quieren un valor por defecto colocar ahi
+  caja nomal:
+    tipotag:   input_tag
+    label: CAJA PRUEBA
+    nomdes: cajades
+    campodes:-1
+    nomhas: cajahas
+    campohas:-1
+    size: 25
+    #PARAMETROS
+    #parametros: width=100

@@ -1,0 +1,10 @@
+database:
+  name:     SIMA
+SIMA:
+  driver:   sqlite3
+  host:     localhost
+  usuario:  root
+  password: 123456
+  bd:       /home/luelher/Descargas/EFQuerySamples_SQLite/DB/northwindEF.db
+  debug:    false
+#  schema:   SIMA011
