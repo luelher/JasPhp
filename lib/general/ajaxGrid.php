@@ -5,9 +5,9 @@
 <?php $index = H::GetPost('index'); ?>
 <?php $page = H::GetPost('page')=='' ? '1' : H::GetPost('page'); ?>
 
-<?php if (isset($opciones["Filas"]) && isset($opciones["Filas"][$index]) && isset($opciones["Filas"][$index]['sqlcat'])  && count($opciones["Filas"]) > 0) : ?>
+<?php if (isset($opciones["Rows"]) && isset($opciones["Rows"][$index]) && isset($opciones["Rows"][$index]['sqlcat'])  && count($opciones["Rows"]) > 0) : ?>
 
-  <?php $rs = $bd->executePager($opciones["Filas"][$index]['sqlcat'],5,$page, $last_page,ADODB_FETCH_ASSOC); ?>
+  <?php $rs = $bd->executePager($opciones["Rows"][$index]['sqlcat'],5,$page, $last_page,ADODB_FETCH_ASSOC); ?>
 
   <?php if($page>$last_page) $page=$last_page; ?>
 

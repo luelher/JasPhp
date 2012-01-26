@@ -23,10 +23,9 @@ Class Jasper{
   
   public static function CargarReportesenJasper($modulo, $reporte)
   {
-        //$schema=J::GetPost('s');
         $parametros = J::LecturaParametros();
-        print "java -jar ../lib/java/reportesjasper.jar $modulo $reporte $parametros";exit;
-        //exec("java -jar ../lib/java/reportesjasper.jar $schema $modulo $reporte $parametros",$return);
+        //print "java -jar ../lib/java/jasphp.jar $modulo $reporte $parametros";exit;
+        exec("java -jar ../lib/java/dist/jasphp.jar $modulo $reporte $parametros",$return);
         //print_r($return);
         return $return;
   }

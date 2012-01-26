@@ -14,9 +14,10 @@
     <head>
         <title>Menú de Reportes</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="description" content="Menu principal de los reportes del SIGA-SL" />
+        <meta name="description" content="Menu principal de los reportes de JasPhp" />
         <meta name="keywords" content="jquery, drop down, menu, navigation, large, mega, siga, reportes "/>
-		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen"/>
+        <script type="text/javascript" src="/js/jquery-1.7.min.js"></script>
         <style>
             *{
                 padding:0;
@@ -76,50 +77,50 @@
 		<h1>Reports Menu</h1>
 		<div class="box">
 			<ul id="ldd_menu" class="ldd_menu">
-                          <?php $opciones = $opciones = Yaml::load("../config/menu/reports.yml"); ?>
-                          <?php $menu=''; $menu = isset($_GET['menu']) ? $_GET['menu'] : ''; ?>
-                          <?php if($menu=='') : ?>
-                                <li>
-                                <span>Reports by Module</span><!-- Increases to 510px in width-->
+        <?php $opciones = $opciones = Yaml::load("../config/menu/reports.yml"); ?>
+        <?php $menu=''; $menu = isset($_GET['menu']) ? $_GET['menu'] : ''; ?>
+        <?php if($menu=='') : ?>
+              <li>
+              <span>Reports by Module</span><!-- Increases to 510px in width-->
+              <div class="ldd_submenu">
+                    <ul>
+                    <?php foreach($opciones as $index => $opc) : ?>
+                          <?php if(!strstr($index, 'urls')) : ?>
+                                  <li><a href="index.php?menu=<?php echo $index; ?>"><?php echo $index ?></a></li>
+                           <?php endif; ?>
+                    <?php endforeach; ?>
+                    </ul>
+              </div>
+              </li>
+        <?php else: ?>
+                        <li>
+                          <span><a href="index.php" >Back</a></span><!-- Increases to 510px in width-->
+                        </li>
+          <?php foreach($opciones as $index => $opc) : ?>
+                <?php if(strstr($index, $menu)) : ?>
+                        <li>
+                                <span><?php echo $index ?></span><!-- Increases to 510px in width-->
                                 <div class="ldd_submenu">
-                                      <ul>
-                                      <?php foreach($opciones as $index => $opc) : ?>
-                                            <?php if(!strstr($index, 'urls')) : ?>
-                                                    <li><a href="index.php?menu=<?php echo $index; ?>"><?php echo $index ?></a></li>
-                                             <?php endif; ?>
-                                      <?php endforeach; ?>
-                                      </ul>
+                                <?php foreach($opc as $i => $m) : ?>
+                                        <ul>
+                                        <?php if(is_array($m)) : ?>
+                                                <li class="ldd_heading"><?php echo $i ?></li>
+                                                <?php foreach($m as $ii => $mm) : ?>
+                                                      <?php if(!is_array($mm)) : ?>
+                                                            <li><a href="<?php echo '/index.php/'.$index.'/'.$mm ?>"><?php echo $ii ?></a></li>
+                                                      <?php endif; ?>
+                                                <?php endforeach; ?>
+                                        <?php else: ?>
+                                                <li><a href="<?php echo '/index.php/'.$index.'/'.$m; ?>"><?php echo $i ?></a></li>
+                                        <?php endif; ?>
+                                        </ul>
+                                <?php endforeach; ?>
                                 </div>
-                                </li>
-                          <?php else: ?>
-                                          <li>
-                                            <span><a href="index.php" >Back</a></span><!-- Increases to 510px in width-->
-                                          </li>
-                            <?php foreach($opciones as $index => $opc) : ?>
-                                  <?php if(strstr($index, $menu)) : ?>
-                                          <li>
-                                                  <span><?php echo $index ?></span><!-- Increases to 510px in width-->
-                                                  <div class="ldd_submenu">
-                                                  <?php foreach($opc as $i => $m) : ?>
-                                                          <ul>
-                                                          <?php if(is_array($m)) : ?>
-                                                                  <li class="ldd_heading"><?php echo $i ?></li>
-                                                                  <?php foreach($m as $ii => $mm) : ?>
-                                                                        <?php if(!is_array($mm)) : ?>
-                                                                              <li><a href="<?php echo '/index.php/'.$index.'/'.$mm ?>"><?php echo $ii ?></a></li>
-                                                                        <?php endif; ?>
-                                                                  <?php endforeach; ?>
-                                                          <?php else: ?>
-                                                                  <li><a href="<?php echo '/index.php/'.$index.'/'.$m; ?>"><?php echo $i ?></a></li>
-                                                          <?php endif; ?>
-                                                          </ul>
-                                                  <?php endforeach; ?>
-                                                  </div>
-                                          </li>
-                                  <?php endif; ?>
-                            <?php endforeach; ?>
+                        </li>
+                <?php endif; ?>
+          <?php endforeach; ?>
 
-                          <?php endif; ?>
+        <?php endif; ?>
 
 			</ul>
 		</div>
@@ -130,7 +131,6 @@
             </span>
         </div>
 		<!-- The JavaScript -->
-        <script type="text/javascript" src="/js/jquery.min.js"></script>
         <script type="text/javascript">
             $(function() {
 				/**
@@ -164,14 +164,12 @@
 </html>
 
 <?php else: ?>
-
 <?php
 
 	$modulo=$router->controller;
 	$reporte=$router->action;
   
 ?>
-
 <?php if($_SERVER['REQUEST_METHOD']=='GET') : ?>
   <?php if($modulo=='ajax') : ?>
     <?php if($reporte=='grid') : ?>
@@ -187,9 +185,6 @@
   <?php include_once '../lib/scaffold/parameterForm.php'; ?>
   <?php endif; // If Ajax ?>
 <?php else: // Request_Method = Post ?>
-
   <?php require_once '../lib/jasphp/jasper.php'; ?>
-
 <?php endif; // Request_Method ?>
-
 <?php endif; ?>
