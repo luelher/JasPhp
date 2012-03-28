@@ -37,8 +37,8 @@ public class JasPhp {
     }
 
     /*****Para capturar los parametros de entrada***********/
-    String modulo = args[1]; //Módulo
-    String nomrep = args[0]; //Reporte
+    String modulo = args[0]; //Módulo
+    String nomrep = args[1]; //Reporte
     String rutarep = rutabase + "reports/" + modulo + "/";
     String reportejasper = rutarep + nomrep + ".jasper";
     Random rnd = new Random();
@@ -87,50 +87,58 @@ public class JasPhp {
 
     Connection connection = null;
     try {
-      connection = JasPhp.Conections(driver, host, usuario, password, bd, port);
+      connection = JasPhp.Conections(driver, host, usuario, password, bd, port, ruta);
       // Ya tenemos el objeto connection creado
 
-      try {
-        JasperReport reporte = (JasperReport) JRLoader.loadObject(reportejasper);
-
-        /***************Parametros del Reprotes*****************/
-        Map parameters = new HashMap();
+      if(connection!=null){
         try {
-          //fijos
-          String titulo = (String) mirepparam.get("title");
+          JasperReport reporte = (JasperReport) JRLoader.loadObject(reportejasper);
 
-          parameters.put("p_dirbase", rutabase);
-          parameters.put("p_title", titulo);
-          //parameters.put("SUBREPORT_DIR", rutarep);
+          /***************Parametros del Reprotes*****************/
+          Map parameters = new HashMap();
+          try {
+            //fijos
+            String titulo = (String) mirepparam.get("title");
 
-          String[][] params = JasPhp.OrderParameters(args);
+            parameters.put("p_dirbase", rutabase);
+            parameters.put("p_title", titulo);
+            //parameters.put("SUBREPORT_DIR", rutarep);
 
-          String[] name = params[0];
-          String[] value = params[1];
-          
-          for (int i=0; i<name.length; i++) {
-            parameters.put(name[i], value[i]);
+            String[][] params = JasPhp.OrderParameters(args);
+
+            String[] name = params[0];
+            String[] value = params[1];
+
+            for (int i=0; i<name.length; i++) {
+              parameters.put(name[i], value[i]);
+            }
+
+          } catch (Exception e) {
+            System.out.println("No se Pudo realizar la carga y pase de parametros. " + e.getMessage().toString());
           }
-          
-        } catch (Exception e) {
-          System.out.println("No se Pudo realizar la carga y pase de parametros. " + e.getMessage().toString());
-        }
-        /*****************FIN***************************/
-        try {
-          JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, connection);
-          if (!(generatxt==null)) {
-            if (generatxt.compareTo("S") == 0) {
-              JRExporter exporter = new JRTextExporter();
-              exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-              reportesalida = "/tmp/reportTXT" + rnd.nextInt() + ".txt";
-              exporter.setParameter(JRExporterParameter.IGNORE_PAGE_MARGINS, true);
-              exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(reportesalida));
-              exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(12));
-              exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(12));
-              exporter.setParameter(JRTextExporterParameter.IGNORE_PAGE_MARGINS, true);
-              exporter.setParameter(JRTextExporterParameter.BETWEEN_PAGES_TEXT, "");
-              exporter.setParameter(JRTextExporterParameter.LINE_SEPARATOR, "\n");
-              exporter.exportReport();
+          /*****************FIN***************************/
+          try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, connection);
+            if (!(generatxt==null)) {
+              if (generatxt.compareTo("S") == 0) {
+                JRExporter exporter = new JRTextExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                reportesalida = "/tmp/reportTXT" + rnd.nextInt() + ".txt";
+                exporter.setParameter(JRExporterParameter.IGNORE_PAGE_MARGINS, true);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(reportesalida));
+                exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(12));
+                exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(12));
+                exporter.setParameter(JRTextExporterParameter.IGNORE_PAGE_MARGINS, true);
+                exporter.setParameter(JRTextExporterParameter.BETWEEN_PAGES_TEXT, "");
+                exporter.setParameter(JRTextExporterParameter.LINE_SEPARATOR, "\n");
+                exporter.exportReport();
+              } else {
+                JRExporter exporter = new JRPdfExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                reportesalida = "/tmp/reportPDF" + rnd.nextInt() + ".pdf";
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(reportesalida));
+                exporter.exportReport();
+              }
             } else {
               JRExporter exporter = new JRPdfExporter();
               exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -138,28 +146,21 @@ public class JasPhp {
               exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(reportesalida));
               exporter.exportReport();
             }
-          } else {
-            JRExporter exporter = new JRPdfExporter();
-            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            reportesalida = "/tmp/reportPDF" + rnd.nextInt() + ".pdf";
-            exporter.setParameter(JRExporterParameter.OUTPUT_FILE, new java.io.File(reportesalida));
-            exporter.exportReport();
+
+            System.out.println(reportesalida);
+          } catch (net.sf.jasperreports.engine.JRException e) {
+            if(e.getCause()==null) System.out.println(e.getMessage().toString());
+            else System.out.println(e.getCause().getMessage().toString());
+          } catch (Exception e) {
+            if(e.getCause()==null) System.out.println(e.getMessage().toString());
+            else System.out.println(e.getCause().getMessage().toString());
           }
 
-          System.out.println(reportesalida);
-        } catch (net.sf.jasperreports.engine.JRException e) {
-          if(e.getCause()==null) System.out.println(e.getMessage().toString());
-          else System.out.println(e.getCause().getMessage().toString());
         } catch (Exception e) {
-          if(e.getCause()==null) System.out.println(e.getMessage().toString());
-          else System.out.println(e.getCause().getMessage().toString());
+            if(e.getCause()==null) System.out.println("No se Puede Generar el Reporte no existe el fichero. " + e.getMessage().toString());
+            else System.out.println("No se Puede Generar el Reporte no existe el fichero. " + e.getCause().getMessage().toString());
         }
-
-      } catch (Exception e) {
-          if(e.getCause()==null) System.out.println("No se Puede Generar el Reporte no existe el fichero. " + e.getMessage().toString());
-          else System.out.println("No se Puede Generar el Reporte no existe el fichero. " + e.getCause().getMessage().toString());
       }
-
     } catch (Exception e) {
       System.out.println("No hay conexion a la Base de Datos. " + e.getMessage().toString());
     } finally {
@@ -172,7 +173,7 @@ public class JasPhp {
     }
   }
 
-  public static java.sql.Connection Conections(String driver, String host, String usuario, String password, String database, String puerto)
+  public static java.sql.Connection Conections(String driver, String host, String usuario, String password, String database, String puerto, String ruta)
   {
     String driverClass = "";
     String urljdbc = "";
@@ -184,16 +185,22 @@ public class JasPhp {
         Class.forName(driverClass).newInstance();
         return DriverManager.getConnection(urljdbc, usuario, password);
       }
-      catch(Exception e){return null;}
+      catch(Exception e){
+        System.out.println("Error en conexion a la Base de Datos. " + e.getMessage().toString());
+        return null;
+      }
     }
     if(driver.equals("sqlite3")) {
       driverClass = "org.sqlite.JDBC";
-      urljdbc = "jdbc:sqlite://" + database;
+      urljdbc = "jdbc:sqlite://" + ruta + "/" + database;
       try {
         Class.forName(driverClass).newInstance();
         return DriverManager.getConnection(urljdbc, usuario, password);
       }
-      catch(Exception e){return null;}
+      catch(Exception e){
+        System.out.println("Error en conexion a la Base de Datos. " + e.getMessage().toString());
+        return null;
+      }
     }
     if(driver.equals("mysql")) {
       driverClass = "com.mysql.jdbc.Driver";
@@ -202,7 +209,10 @@ public class JasPhp {
         Class.forName(driverClass).newInstance();
         return DriverManager.getConnection(urljdbc, usuario, password);
       }
-      catch(Exception e){return null;}
+      catch(Exception e){
+        System.out.println("Error en conexion a la Base de Datos. " + e.getMessage().toString());
+        return null;
+      }
     }
     if(driver.equals("oracle")) {
       driverClass = "org.postgresql.Driver";
@@ -211,7 +221,10 @@ public class JasPhp {
         Class.forName(driverClass).newInstance();
         return DriverManager.getConnection(urljdbc, usuario, password);
       }
-      catch(Exception e){return null;}
+      catch(Exception e){
+        System.out.println("Error en conexion a la Base de Datos. " + e.getMessage().toString());
+        return null;
+      }
     }else return null;
 
   }

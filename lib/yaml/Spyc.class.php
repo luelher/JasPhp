@@ -1,5 +1,8 @@
 <?php
-  /** 
+
+namespace JasPhp;
+
+/** 
    * Spyc -- A Simple PHP YAML Class
    * @version 0.2.3 -- 2006-02-04
    * @author Chris Wanstrath <chris@ozmm.org>

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <title>Menú de Reportes</title>
+        <title>Report Menu</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="description" content="Menu principal de los reportes de JasPhp" />
+        <meta name="description" content="report main menu for JasPhp" />
         <meta name="keywords" content="jquery, drop down, menu, navigation, large, mega, siga, reportes "/>
         <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen"/>
         <script type="text/javascript" src="/js/jquery-1.7.min.js"></script>
@@ -66,46 +66,34 @@
 		<h1>Reports Menu</h1>
 		<div class="box">
 			<ul id="ldd_menu" class="ldd_menu">
-        {% if menu %}
+        {% if main %}
               <li>
               <span>Reports by Module</span><!-- Increases to 510px in width-->
               <div class="ldd_submenu">
                     <ul>
-                    {% for opt in options %}
-                       <li><a href="index.php?menu= {{ opt.menu }}">{{ opt.name }}</a></li>
-                    {% endif %}
+                    {% for mod in modules %}
+                       <li><a href="/index.php/menu/{{ mod.module }}">{{ mod.name }}</a></li>
+                    {% endfor %}
                     </ul>
               </div>
               </li>
         {% else %}
-                        <li>
-                          <span><a href="index.php" >Back</a></span><!-- Increases to 510px in width-->
-                        </li>
-          <?php foreach($opciones as $index => $opc) : ?>
-                <?php if(strstr($index, $menu)) : ?>
-                        <li>
-                                <span><?php echo $index ?></span><!-- Increases to 510px in width-->
-                                <div class="ldd_submenu">
-                                <?php foreach($opc as $i => $m) : ?>
-                                        <ul>
-                                        <?php if(is_array($m)) : ?>
-                                                <li class="ldd_heading"><?php echo $i ?></li>
-                                                <?php foreach($m as $ii => $mm) : ?>
-                                                      <?php if(!is_array($mm)) : ?>
-                                                            <li><a href="<?php echo '/index.php/'.$index.'/'.$mm ?>"><?php echo $ii ?></a></li>
-                                                      <?php endif; ?>
-                                                <?php endforeach; ?>
-                                        <?php else: ?>
-                                                <li><a href="<?php echo '/index.php/'.$index.'/'.$m; ?>"><?php echo $i ?></a></li>
-                                        <?php endif; ?>
-                                        </ul>
-                                <?php endforeach; ?>
-                                </div>
-                        </li>
-                <?php endif; ?>
-          <?php endforeach; ?>
+              <li>
+                <span><a href="index.php" >Back</a></span><!-- Increases to 510px in width-->
+              </li>
+            
+              <li>
+                <span>{{ module_name }}</span><!-- Increases to 510px in width-->
+                <div class="ldd_submenu">
+                {% for m in menu %}
+                  <ul>
+                    <li><a href="/index.php/reports/{{ module }}/{{ m.report }}">{{ m.name }}</a></li>
+                  </ul>
+                {% endfor %}
+                </div>
+              </li>
 
-        <?php endif; ?>
+        {% endif %}
 
 			</ul>
 		</div>

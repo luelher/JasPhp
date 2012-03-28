@@ -1,2 +1,9 @@
+modules:
+  Demo Module: demo
+  Another Demo Module: thedemo
+
 demo:
-  List of Clients: clients
+  List of Clients: employees
+
+thedemo:
+  List of Demo Clients: clients

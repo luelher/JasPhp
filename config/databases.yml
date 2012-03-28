@@ -5,7 +5,7 @@ sqlite:
   host:     localhost
   usuario:  root
   password: "123456"
-  bd:       ../demofiles/northwindEF.db
+  bd:       "../demo/northwindEF.db"
   debug:    false
 postgres:
   driver:   postgresql
