@@ -5,13 +5,13 @@ Params:
   orientation: Vertical
   page: Letter
   width: 210
-  description: bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla sobre el reporte
+  description: bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla about the report
 Rows:
   Row1:
     type:   inputcat_tag
     label: "Employees:"
     sql:   "SELECT min(EmployeeID) as minid, max(EmployeeID) as maxid FROM Employees"
-    sqlcat: "SELECT EmployeeID as identificador, LastName || ' ' ||FirstName as nombre FROM Employees"
+    sqlcat: "SELECT EmployeeID as identificador, LastName || ' ' ||FirstName as nombre FROM Employees where firstname like '%?%' "
     name_from: empfrom
     field_from: minid
     name_to: empto

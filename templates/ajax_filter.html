@@ -1,0 +1,13 @@
+
+
+{% for filter in filters %}
+  <div class="clearfix">
+    <label for="lInput"><strong>{{ filter['label'] }}:</strong></label>
+    <div class="input row show-grid">
+      <div class="span4"><input type="text" value="{{ filter['value'] }}" id="search_{{ filter['id'] }}" class="medium " name="search[{{ filter['id'] }}]">
+    </div>
+  </div>
+{% endfor %}
+<div class="actions">
+  <input type="submit" value="search" class="btn">&nbsp;
+</div>

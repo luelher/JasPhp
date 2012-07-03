@@ -12,6 +12,63 @@ class ReportsControllerProvider implements ControllerProviderInterface
     {
         $controllers = new ControllerCollection();
 
+        $controllers->post('/ajax/{action}', function (Application $app, $action) {
+          $request = $app['request'];
+
+          $filters = $request->get('ajax');
+
+          if($action=='filter'){
+
+            $parameter_form = new \JasPhp\ParameterForm($filters['module'], $filters['report'], $app);
+
+            $parameter_form->parseYml();
+
+            $filters = $parameter_form->getFilters($filters['index']);
+
+            return $app['twig']->render('ajax_filter.html', array(
+              'filters' => $filters,
+            ));
+
+          }elseif($action=='grid'){
+
+            $filters = $request->get('ajax');
+            $search = $request->get('search');
+
+            $parameter_form = new \JasPhp\ParameterForm($filters['module'], $filters['report'], $app);
+
+            $parameter_form->parseYml();
+
+            $index = $filters['index'];
+            $page = isset($filters['page']) ? $filters['page'] : '1';
+
+            $rs = $parameter_form->getPager($index,5,$page, $last_page);
+            if(count($rs)>0){
+              if($page>$last_page) $page=$last_page;
+
+              return $app['twig']->render('ajax_grid.html', array(
+                'rs' => $rs,
+                'obj' => $filters['obj'],
+                  'index' => $index,
+                  'report' => $filters['report'],
+                  'module' => $filters['module'],
+                  'page' => $page,
+                  'last_page' => $last_page
+              ));
+
+            }else{
+              return "<h2>Sin Datos</h2>";
+            }
+          }else{
+            return null;
+          }
+
+          $java = new \JasPhp\Jasper();
+
+          return 'Hola Mundo';
+
+        });
+
+
         $controllers->get('/{module}/{report}', function (Application $app, $module, $report) {
 
           $parameter_form = new \JasPhp\ParameterForm($module, $report, $app);
@@ -36,11 +93,6 @@ class ReportsControllerProvider implements ControllerProviderInterface
         $controllers->post('/{module}/{report}', function (Application $app, $module, $report) {
 
           $request = $app['request'];
-
-          //$header = $app['headers'];
-
-          //print '<pre>';
-          //print_r($request['headers']);exit;
 
           $filters = $request->get('filters');
 
@@ -88,12 +140,8 @@ class ReportsControllerProvider implements ControllerProviderInterface
               'url' => $url,
             ));
           }
-
-          
-
           return null;
         });
-
         return $controllers;
     }
 

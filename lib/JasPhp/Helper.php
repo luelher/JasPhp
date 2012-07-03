@@ -239,6 +239,18 @@ class Helper {
     return $script;
   }
 
+  function search_input_tag($opts){
+
+    $html = '<div class="clearfix">
+    <label for="lInput"><strong>'.$opts['label'].':</strong></label>
+    <div class="input row show-grid">
+      <div class="span4"><input type="text" value="'.$opts['value'].'" id="search_'.$opts['id'].'" class="medium " name="search['.$opts['id'].']">
+    </div>
+  </div>';
+
+    return $html;
+  }
+
   function render(){
 
     if(count($this->opts)>0){

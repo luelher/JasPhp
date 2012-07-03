@@ -3,8 +3,32 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="p_title" class="java.lang.String"/>
-	<parameter name="p_dirbase" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+   a.orderid,
+   c.productid,
+   x.productname,
+   c.unitprice,
+   c.quantity,
+   c.discount,
+   b.companyname,
+   b.address, b.city, b.country
+FROM
+    products x, orders a inner join customers b on a.customerid=b.customerid
+                     inner join orderdetails c on a.orderid=c.orderid
+WHERE
+   c.productid=x.productid]]>
+	</queryString>
+	<field name="OrderID" class="java.lang.Object"/>
+	<field name="ProductID" class="java.lang.Object"/>
+	<field name="ProductName" class="java.lang.Object"/>
+	<field name="UnitPrice" class="java.lang.Object"/>
+	<field name="Quantity" class="java.lang.Object"/>
+	<field name="Discount" class="java.lang.Object"/>
+	<field name="CompanyName" class="java.lang.Object"/>
+	<field name="Address" class="java.lang.Object"/>
+	<field name="City" class="java.lang.Object"/>
+	<field name="Country" class="java.lang.Object"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

@@ -91,6 +91,56 @@ class ParameterForm implements \Iterator {
 
   }
 
+  function getPager($index, $max_rows, $page, &$last_page){
+
+    $row_opt = null;
+    foreach ($this->rows as $row){
+      if($row['index']==$index) $row_opt = $row;
+    }
+
+    if($row_opt){
+      $sql = \sprintf($format, $args);
+      $sql = str_replace('?', '', $row_opt['sqlcat']);
+      $rows = $this->app['database.page_execute']($sql ,$max_rows, $page, $last_page, ADODB_FETCH_ASSOC);
+      return $rows;
+    }
+
+    return $row_opt;
+
+  }
+
+  function getFilters($index){
+    $row_opt = null;
+    $filters = array();
+    
+    foreach ($this->rows as $row){
+      if($row['index']==$index) $row_opt = $row;
+    }
+
+    if($row_opt){
+      $rows = $this->app['database.execute']( str_replace('?', '', $row_opt['sqlcat']).' LIMIT 1' ,ADODB_FETCH_ASSOC);
+
+      if(count($rows)>0) $rows = $rows[0];
+      else return $html;
+
+      $i=0;
+      $opts=array();
+      $helper = new Helper($this->app, $opts);
+
+      foreach($rows as $index => $value){
+        if($i>0){
+          $opts['label'] = $index;
+          $opts['id'] = $index;
+          $opts['value'] = '';
+
+          $filters[] = $opts;
+        }
+        $i++;
+      }
+    }
+    return $filters;
+  }
+  
   function rewind() {
     $this->position = 0;
   }

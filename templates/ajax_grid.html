@@ -1,0 +1,38 @@
+
+    <table id="sortTableExample" class="zebra-striped">
+      <thead>
+        <tr>
+          {% for name, value in rs[0] %}
+          <th class="green header">{{ name }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for register in rs %}
+          <tr>
+            {% set col = 0 %}
+            {% for name, value in register %}
+              {% if col == 0 %}
+                <td><a objCat="{{ obj }}" class="selected close" href="#">{{ value }}</a></td>
+              {% else %}
+                <td>{{ value }}</td>
+              {% endif %}
+              {% set col = col + 1 %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <ul>
+        <li id="page-previous" class="prev"><a href="javascript:previous('{{ obj }}','{{ index }}','{{ report }}','{{ module }}')">← Anterior</a></li>
+        <li id="page-next" class="next"><a href="javascript:next('{{ obj }}','{{ index }}','{{ report }}','{{ module }}')">Siguiente →</a></li>
+      </ul>
+      <input type="hidden" id="actual-page" value="{{ page }}">
+    </div>
+<script>
+$('.selected').click(function (){
+  select_item(this)
+});
+</script>

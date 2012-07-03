@@ -7,20 +7,28 @@ $(document).ready(function () {
   })
 
 
-  $('.selected').click(function (){
-    objCat = $('.selected').attr('objCat');
+  select_item = function (item){
+    objCat = $(item).attr('objCat');
     if(objCat!=''){
-      $('#'+objCat)[0].value=$(this).html();
+      $('#filters_'+objCat)[0].value=$(item).html();
     }
-  });
+  };
 
 
   catalog = function(obj, index, report, module) {
 
     $('#catalog').modal();
 
-    $('#filters-ajax').load('/index.php/ajax/filter?module='+module+'&report='+report+'&index='+index+'&obj='+obj+'&page=1');
-    $('#grid-ajax').load('/index.php/ajax/grid?module='+module+'&report='+report+'&index='+index+'&obj='+obj+'&page=1');
+    post_data = {
+        'ajax[module]': module,
+        'ajax[report]': report,
+        'ajax[index]':  index,
+        'ajax[obj]':    obj,
+        'ajax[page]':   '1'
+        };
+
+    $('#filters-ajax').load('/index.php/reports/ajax/filter', post_data);
+    $('#grid-ajax').load('/index.php/reports/ajax/grid', post_data);
 
   };
 
@@ -34,7 +42,15 @@ $(document).ready(function () {
     if(page>0) page--;
     else page=1;
 
-    $('#grid-ajax').load('/index.php/ajax/grid?module='+module+'&report='+report+'&index='+index+'&obj='+obj+'&page='+page);
+    post_data = {
+        'ajax[module]': module,
+        'ajax[report]': report,
+        'ajax[index]':  index,
+        'ajax[obj]':    obj,
+        'ajax[page]':   page
+        };
+
+    $('#grid-ajax').load('/index.php/reports/ajax/grid', post_data);
   };
 
   next = function (obj, index, report, module){
@@ -42,7 +58,15 @@ $(document).ready(function () {
     page = parseInt($('#actual-page')[0].value);
     page++;
 
-    $('#grid-ajax').load('/index.php/ajax/grid?module='+module+'&report='+report+'&index='+index+'&obj='+obj+'&page='+page);
+    post_data = {
+        'ajax[module]': module,
+        'ajax[report]': report,
+        'ajax[index]':  index,
+        'ajax[obj]':    obj,
+        'ajax[page]':   page
+        };
+
+    $('#grid-ajax').load('/index.php/reports/ajax/grid', post_data);
   };
 
 
