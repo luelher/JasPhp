@@ -29,5 +29,11 @@ http://cyberrevolucionario.blogspot.com/
 Cabudare, Lara, Venezuela
 
 
+======
+=TODO=
+======
 
-
+* Crear pruebas funcionales
+* Integración de algún proceso de autenticación. Se sugiere algún plugin para silex
+* Cambiar la librería de jasper para exportar otros formatos.
+* Probar con otras bases de datos (mysql, sqlserver, oracle)
