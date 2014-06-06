@@ -1,0 +1,57 @@
+Params:
+  module: bienes
+  name: bnretqmue
+  title: Etiquetas de Activos
+  orientation: Vertical
+  page: Letter
+  width: 210
+  description: Generador de etiquetas por grupo de activos
+Rows:
+  Row1:
+    type:   inputcat_tag
+    label: "Código de Activo:"
+    sql:   "SELECT min(codact) as minid, max(codact) as maxid FROM bndefact"
+    sqlcat: "SELECT codact as codigo, desact as descripcion FROM bndefact where codact like '%?%' "
+    name_from: codactfrom
+    field_from: minid
+    name_to: codactto
+    field_to: maxid
+  Row2:
+    type:   inputcat_tag
+    label: "Código de Bien:"
+    sql:   "SELECT min(codmue) as minid, max(codmue) as maxid FROM bnregmue"
+    sqlcat: "SELECT codmue as codigo, desmue as descripcion FROM bnregmue where codmue like '%?%' "
+    name_from: codmuefrom
+    field_from: minid
+    name_to: codmueto
+    field_to: maxid
+
+#  caja Fecha:
+#    tipotag:   inputfec_tag
+#    label: "FECHA PRUEBA:"
+#    sql:   SELECT min(fecha_hora) as fechamin,max(fecha_hora) as fechamax FROM consultas
+#    nomdes: fechades
+#    campodes: fechamin
+#    nomhas: fechahas
+#    campohas: fechamax
+#    size: 15
+#  Combo:
+#    tipotag:   combo_tag
+#    label: "COMBO PRUEBA:"
+#    sql:   SELECT id_nivel, descripcion FROM nivel order by id_nivel
+#    nomdes: combodes
+#    campodes: id_nivel-descripcion
+#    nomhas: combodes
+#    campohas: id_nivel-descripcion
+#  combo primero fijo:
+#    tipotag:   combof_tag
+#    label: "COMBO FIJO PRUEBA"
+#    nomdes: combofdes
+#    campodes: [S=>Soltero, C=>Casado, V=>Viudo]
+#    nomhas: combofhas
+#    campohas: [V=>Viudo, C=>Casado, S=>Soltero]
+#  caja textarea:
+#    tipotag:   inputarea_tag
+#    label: "CAJA TEXTAREA PRUEBA:"
+#    nomdes: cajaareades
+#    campodes: -1

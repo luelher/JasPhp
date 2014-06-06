@@ -60,7 +60,10 @@ class ParameterForm implements \Iterator {
   }
 
   function parseYml() {
+
     $yml_array = Yaml::load($this->yml);
+
+    // print_r($this->yml);
 
     if (is_array($yml_array)) {
       if (isset($yml_array['Params'])) {
@@ -70,6 +73,7 @@ class ParameterForm implements \Iterator {
         $rows = $yml_array['Rows'];
       }
 
+      // print_r($rows);
       foreach($rows as $i => $row){
         $row['index'] = $i;
         $this->rows[] = $row;
@@ -128,7 +132,7 @@ class ParameterForm implements \Iterator {
     }
 
     if($row_opt){
-      $sql = \sprintf($format, $args);
+      //$sql = \sprintf($format, $args);
       $sql = str_replace('?', '', $row_opt['sqlcat']);
       $rows = $this->app['database.page_execute']($sql ,$max_rows, $page, $last_page, ADODB_FETCH_ASSOC);
       return $rows;

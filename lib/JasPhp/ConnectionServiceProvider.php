@@ -18,9 +18,9 @@ class ConnectionServiceProvider implements ServiceProviderInterface {
       if ($driver == 'mysql') {
         $app['connection.conn'] = ADONewConnection($driver); //Conexion con MySQL
         $app['connection.conn']->PConnect($server, $user, $pws, $sid);
-      } else if ($driver == 'postgres') {
-        $app['connection.dsn'] = $driver . '://' . $user . ':' . $pws . '@' . $server . ':' . $port . '/' . $sid . '?persist'; //Conexion con PostgreSQL
-        $app['connection.conn'] = ADONewConnection($app['connection.dsn']); //Conexion con PostgreSQL
+      } else if ($driver == 'postgres' || $driver == 'postgres7') {
+        $app['connection.conn'] = ADONewConnection($driver); //Conexion con Postgresql
+        $app['connection.conn']->PConnect($server, $user, $pws, $sid);
       } else if ($driver == 'oci8') {
         $app['connection.conn'] = ADONewConnection($driver); //Conexion con Oracle
         $app['connection.conn']->Connect($server, $user, $pws, $sid);

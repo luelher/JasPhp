@@ -1,5 +1,5 @@
 database:
-  name:     sqlite
+  name:     postgres
 sqlite:
   driver:   sqlite3
   host:     localhost
@@ -8,11 +8,11 @@ sqlite:
   bd:       "../demo/northwindEF.db"
   debug:    false
 postgres:
-  driver:   postgresql
+  driver:   postgres7
   host:     localhost
-  usuario:  postgres
-  password: postgres
-  bd:       northwind
+  usuario:  post
+  password: post
+  bd:       SIMA
   debug:    false
 mysql:
   driver:   mysql

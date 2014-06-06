@@ -1,7 +1,10 @@
 modules:
+  Bienes: bienes
   Demo Module: demo
   Another Demo Module: thedemo
 
+bienes:
+  Etiquetas de Activos: bnretqmue
 demo:
   List of Clients: employees
 
