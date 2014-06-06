@@ -1,10 +1,13 @@
 <?php
 require_once __DIR__.'/../lib/silex/silex.phar';
+require_once __DIR__.'/../lib/yaml/Yaml.class.php';
 
 $app = new Silex\Application();
 $app['debug'] = true;
 $app['autoloader']->registerNamespace( 'JasPhp', __DIR__.'/../lib');
-
+$config = JasPhp\Yaml::load(__DIR__."/../config/config.yml");
+$app['config'] = $config['jasphp'];
+ 
 $app->register(new JasPhp\ConnectionServiceProvider());
 $app->register(new JasPhp\DatabaseServiceProvider());
 

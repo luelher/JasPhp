@@ -11,6 +11,7 @@ class Helper {
   private $nomrep = '';
   private $nommod = '';
 
+  public static $validate_all = array('type', 'label', 'sql', 'sqlcat', 'name_from', 'field_from', 'name_to', 'field_to', 'params', 'size', 'index');
   public static $validate_inputcat = array('type', 'label', 'sql', 'sqlcat', 'name_from', 'field_from');
   public static $validate_input = array('type', 'label', 'name_from', 'field_from');
   public static $validate_inputfec = array('type', 'label', 'sql', 'name_from', 'field_from');

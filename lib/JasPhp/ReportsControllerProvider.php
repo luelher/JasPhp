@@ -75,7 +75,7 @@ class ReportsControllerProvider implements ControllerProviderInterface
 
           $parameter_form->parseYml();
 
-          $fmt = new \IntlDateFormatter($locale, \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, $timezone, \IntlDateFormatter::GREGORIAN);
+          $fmt = new \IntlDateFormatter($app['config']['locale'], \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, $app['config']['timezone'], \IntlDateFormatter::GREGORIAN);
 
           $user = isset($_SESSION["user"]) ? $_SESSION["user"] : 'No Autenticated User';
 

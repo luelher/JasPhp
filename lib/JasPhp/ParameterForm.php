@@ -78,10 +78,39 @@ class ParameterForm implements \Iterator {
     }
   }
 
+  private function check_options($options, $values)
+  {
+    $response = true;
+    foreach ($variable as $key => $value) {
+      # code...
+    }
+  }
+
+  private function validate_options($row_opt)
+  {
+    switch($row_opt['type']){
+      case 'inputcat_tag':
+        break;
+    }
+    // print_r($row_opt);
+    return $row_opt; 
+  }
+
+  private function default_options($row_opt)
+  {
+    foreach (Helper::$validate_all as $key) {
+      if(!array_key_exists($key, $row_opt)){
+        $row_opt[$key] = '';
+      }   
+    }
+    return $row_opt; 
+  }
 
   function renderRow($row){
 
-    $row_opt = $this->rows[$row];
+    $row_opt = $this->default_options($this->rows[$row]);
+
+    $row_opt = $this->validate_options($row_opt);
 
     $helper = new Helper($this->app,$row_opt);
     $helper->setNomrep($this->options['name']);
