@@ -1,4 +1,4 @@
-<h1> JasPhp </h1>
+= JasPhp 
 
 Micro Framework for Reporting using Jasper Report and Php
 
@@ -28,40 +28,27 @@ http://cyberrevolucionario.blogspot.com/
 
 Cabudare, Lara, Venezuela
 
-<h1>Prerequisitos</h1>
-<pre>
-apt-get install php5-sqlite php5-intl
-</pre>
+= Prerequisitos
+
+> apt-get install php5-sqlite php5-intl
 
 
-<h1>
-Instalation
-</h1>
+= Instalation
 
-<pre>
-git clone https://github.com/luelher/JasPhp.git
-</pre>
+> git clone https://github.com/luelher/JasPhp.git
 
 
-<pre>
-cd JasPhp
-</pre>
+> cd JasPhp
 
-<pre>
-git submodule update
-</pre>
+> git submodule update
 
-<pre>
-php -S localhost:8000 -t public/
-</pre>
+> php -S localhost:8000 -t public/
 
 
 Enjoy!!!
 
 
-<h2>
-TODO
-</h2>
+= TODO
 
 * Crear pruebas funcionales
 * Integración de algún proceso de autenticación. Se sugiere algún plugin para silex
